@@ -1,0 +1,33 @@
+.wrap{
+    display: flex;
+}
+.elem{
+    width: 30px;
+    height: 30px;
+    background-color: #64b764;
+    border: 1px solid black;
+    background-size: cover;
+}
+.elem.flag:not(.open){
+    background-image: url("flag.png");
+}
+.elem.open{
+    background-color: rgb(243 218 173);
+}
+.elem.open.bomb{
+    background-image: url("bomb.png");
+}
+
+#clear{
+    display: none;
+}
+body.clear>#clear{
+    display: block;
+}
+#fail{
+    display: none;
+    color: red;
+}
+body.fail>#fail{
+    display: block;
+}
