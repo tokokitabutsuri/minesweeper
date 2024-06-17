@@ -1,6 +1,6 @@
 const height = 10;
 const width = 10;
-const bombsum = 1;
+const bombsum = 10;
 const bombpercent = bombsum / (height * width);
 let safe;
 let out;
