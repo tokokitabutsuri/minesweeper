@@ -1,32 +1,42 @@
-const height = 10;
-const width = 10;
-const bombsum = 10;
-const bombpercent = bombsum / (height * width);
+const minsize=15;
+const maxsize=60;
+
 let safe;
 let out;
 /**@type Array<Array<masubase>> */
 const masuwraps = [];
 const start = () => {
-	safe = width * height - bombsum;
+	const tate=Number.parseInt(document.getElementById("tate").value)
+	const yoko=Number.parseInt(document.getElementById("yoko").value)
+	const bombsum=Number.parseInt(document.getElementById("bomb").value)
+	const bombpercent = bombsum / (tate * yoko);
+
+	const size=Math.min((window.innerWidth-16)/yoko,(window.innerHeight-16)/tate)-2
+	document.body.style.setProperty("--size", `${Math.min(Math.max(size,minsize),maxsize)}px`);
+
+	safe = yoko * tate - bombsum;
 	out = false;
 	const main = document.getElementById("main");
 	Array.from(main.childNodes).map((e) => {
 		e.remove();
 	});
 	masuwraps.splice(0);
-	document.body.classList.value=""
+	document.body.classList.value = "";
 	let bombsumnow = 0;
-	for (let i = 0; i < height + 2; i++) {
+	for (let i = 0; i < tate + 2; i++) {
 		const masuwrap = [];
 		const parentelem = document.createElement("div");
 		parentelem.classList = `wrap wrap_${i}`;
 
-		for (let j = 0; j < width + 2; j++) {
-			if (i === 0 || i === height + 1 || j === 0 || j === width + 1) {
+		for (let j = 0; j < yoko + 2; j++) {
+			if ((i === 0 || i === tate + 1) && (j === 0 || j === yoko + 1)) {
+				parentelem.style.display = "none";
+			}
+			if (i === 0 || i === tate + 1 || j === 0 || j === yoko + 1) {
 				masuwrap.push(new hasi());
 			} else {
 				const bombnokori = bombsum - bombsumnow;
-				const masunokori = width * height - ((i - 1) * width + (j - 1));
+				const masunokori = yoko * tate - ((i - 1) * yoko + (j - 1));
 				// console.log(`bomb${bombnokori}masu${masunokori}`);
 				if (
 					bombnokori > 0 &&
@@ -42,7 +52,6 @@ const start = () => {
 		masuwraps.push(masuwrap);
 		main.appendChild(parentelem);
 	}
-	console.log(masuwraps);
 	masuwraps.map((v) => {
 		v.map((v2) => {
 			v2.checkbomb();
@@ -51,7 +60,7 @@ const start = () => {
 };
 document.getElementById("start").addEventListener("click", start);
 class masubase {
-	addnum() {}
+	num() {}
 	bubbleopen() {}
 	checkbomb() {}
 }
@@ -124,7 +133,7 @@ class masu extends masubase {
 			if (this.#hasbom) {
 				this.#elem.classList.add("bomb");
 				out = true;
-				document.body.classList.add("fail")
+				document.body.classList.add("fail");
 				return;
 			}
 			safe--;

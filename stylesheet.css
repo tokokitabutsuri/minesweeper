@@ -1,9 +1,12 @@
+#main{
+    width: fit-content;
+}
 .wrap{
     display: flex;
 }
 .elem{
-    width: 30px;
-    height: 30px;
+    width: var(--size);
+    height: var(--size);
     background-color: #64b764;
     border: 1px solid black;
     background-size: cover;
