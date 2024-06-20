@@ -197,7 +197,6 @@ const getaround = (x, y) => {
 };
 document.addEventListener("DOMContentLoaded", () => {
 	const observer = new MutationObserver((records) => {
-		console.log(records);
 		records.map((record) => {
 			if (!String(record.target.classList).includes("elem")) return;
 			record.target.classList.add(`num_${Number.parseInt(record.target.innerText)}`);
