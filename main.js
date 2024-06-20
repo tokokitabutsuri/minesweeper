@@ -1,18 +1,25 @@
-const minsize=15;
-const maxsize=60;
+const minsize = 15;
+const maxsize = 120;
 
 let safe;
 let out;
 /**@type Array<Array<masubase>> */
 const masuwraps = [];
 const start = () => {
-	const tate=Number.parseInt(document.getElementById("tate").value)
-	const yoko=Number.parseInt(document.getElementById("yoko").value)
-	const bombsum=Number.parseInt(document.getElementById("bomb").value)
+	const tate = Number.parseInt(document.getElementById("tate").value);
+	const yoko = Number.parseInt(document.getElementById("yoko").value);
+	const bombsum = Number.parseInt(document.getElementById("bomb").value);
 	const bombpercent = bombsum / (tate * yoko);
-
-	const size=Math.min((window.innerWidth-16)/yoko,(window.innerHeight-16)/tate)-2
-	document.body.style.setProperty("--size", `${Math.min(Math.max(size,minsize),maxsize)}px`);
+	const size =
+		Math.min(
+			(window.innerWidth - 16) / yoko,
+			(window.innerHeight - document.getElementById("menu").scrollHeight - 16) /
+				tate,
+		) - 2;
+	document.body.style.setProperty(
+		"--size",
+		`${Math.min(Math.max(size, minsize), maxsize)}px`,
+	);
 
 	safe = yoko * tate - bombsum;
 	out = false;
@@ -188,3 +195,18 @@ const getaround = (x, y) => {
 		mw(x + 1, y + 1),
 	];
 };
+document.addEventListener("DOMContentLoaded", () => {
+	const observer = new MutationObserver((records) => {
+		console.log(records);
+		records.map((record) => {
+			if (!String(record.target.classList).includes("elem")) return;
+			record.target.classList.add(`num_${Number.parseInt(record.target.innerText)}`);
+		});
+	});
+	observer.observe(document.getElementById("main"), {
+		attributes: false,
+		characterData: true,
+		subtree:true,
+		childList: true,
+	});
+});
