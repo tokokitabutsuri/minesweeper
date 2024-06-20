@@ -1,10 +1,12 @@
-#main{
+#main {
     width: fit-content;
 }
-.wrap{
+
+.wrap {
     display: flex;
 }
-.elem{
+
+.elem {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,25 +15,31 @@
     background-color: #64b764;
     border: 1px solid black;
     background-size: cover;
-    font-size: max(calc(var(--size) * 0.8),15px);
+    font-size: max(calc(var(--size) * 0.8), 15px);
 }
-.elem.flag:not(.open){
+
+.elem.flag:not(.open) {
     background-image: url("flag.png");
 }
-.elem.open{
+
+.elem.open {
     background-color: rgb(243 218 173);
 }
-.elem.open.bomb{
+
+.elem.open.bomb {
     background-image: url("bomb.png");
 }
-#content{
+
+#content {
     width: fit-content;
     position: relative;
 }
-#clear{
+
+#clear {
     display: none;
 }
-body.clear #clear{
+
+body.clear #clear {
     display: flex;
     position: absolute;
     width: 100%;
@@ -44,11 +52,13 @@ body.clear #clear{
     align-items: center;
     justify-content: center;
 }
-#fail{
+
+#fail {
     display: none;
     color: red;
 }
-body.fail #fail{
+
+body.fail #fail {
     display: flex;
     position: absolute;
     width: 100%;
@@ -64,27 +74,34 @@ body.fail #fail{
 
 
 
-.elem.num_1{
+.elem.num_1 {
     color: #0000ff;
 }
-.elem.num_2{
+
+.elem.num_2 {
     color: #008000;
 }
-.elem.num_3{
+
+.elem.num_3 {
     color: #ff0000;
 }
-.elem.num_4{
+
+.elem.num_4 {
     color: #000080;
 }
-.elem.num_5{
+
+.elem.num_5 {
     color: #800000;
 }
-.elem.num_6{
+
+.elem.num_6 {
     color: #008080;
 }
-.elem.num_7{
+
+.elem.num_7 {
     color: #800080;
 }
-.elem.num_8{
+
+.elem.num_8 {
     color: #000000;
 }

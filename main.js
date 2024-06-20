@@ -199,13 +199,15 @@ document.addEventListener("DOMContentLoaded", () => {
 	const observer = new MutationObserver((records) => {
 		records.map((record) => {
 			if (!String(record.target.classList).includes("elem")) return;
-			record.target.classList.add(`num_${Number.parseInt(record.target.innerText)}`);
+			record.target.classList.add(
+				`num_${Number.parseInt(record.target.innerText)}`,
+			);
 		});
 	});
 	observer.observe(document.getElementById("main"), {
 		attributes: false,
 		characterData: true,
-		subtree:true,
+		subtree: true,
 		childList: true,
 	});
 });
