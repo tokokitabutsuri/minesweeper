@@ -20,7 +20,8 @@
     border: 1px solid black;
     background-size: cover;
     font-size: max(calc(var(--size) * 0.8), 15px);
-    
+    -webkit-user-select: none; 
+    user-select: none;
 }
 
 .elem.flag:not(.open) {
