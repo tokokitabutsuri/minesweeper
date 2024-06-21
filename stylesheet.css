@@ -1,3 +1,11 @@
+label {
+    display: inline-block;
+}
+
+input {
+    width: 50px;
+}
+
 #main {
     width: fit-content;
     -webkit-user-select: none; 
@@ -76,6 +84,14 @@ body.fail #fail {
     font-size: xxx-large;
     align-items: center;
     justify-content: center;
+}
+
+#popup {
+    position: fixed;
+    display: none;
+    z-index: 10;
+    background-color: white;
+    padding: 10px;
 }
 
 

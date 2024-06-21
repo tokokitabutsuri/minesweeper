@@ -1,6 +1,5 @@
 const minsize = 15;
 const maxsize = 120;
-
 let safe;
 let out;
 /**@type Array<Array<masubase>> */
@@ -70,6 +69,9 @@ class masubase {
 	num() {}
 	bubbleopen() {}
 	checkbomb() {}
+	setflag() {}
+	removeflag() {}
+	addnum() {}
 }
 class masu extends masubase {
 	#x;
@@ -96,11 +98,31 @@ class masu extends masubase {
 		elem.classList = "elem";
 		elem.dataset.x = x;
 		elem.dataset.y = y;
+		elem.addEventListener("touchstart", this.openmenu);
 		elem.addEventListener("click", this.click);
 		elem.addEventListener("contextmenu", this.rightclick);
+
 		parentelem.appendChild(elem);
 		this.#elem = elem;
-		//ボムを持ってる場合周りの数字を加算
+	}
+	/**
+	 * @param {TouchEvent} ev
+	 * @this {HTMLDivElement}
+	 */
+	openmenu(ev) {
+		//スマホの場合のみ
+		ev.preventDefault(); //Clickイベントの発生を防ぐ
+		ev.stopPropagation();
+		if (safe === 0 || out) return;
+		const x = Number.parseInt(this.dataset.x);
+		const y = Number.parseInt(this.dataset.y);
+		const popup = document.getElementById("popup");
+		popup.dataset.x = x;
+		popup.dataset.y = y;
+		const touch = ev.touches[0];
+		popup.style.top = `${touch.clientY - popup.clientHeight}px`;
+		popup.style.left = `${touch.clientX - popup.clientWidth / 2}px`;
+		popup.style.display = "block";
 	}
 	/**
 	 * @param {MouseEvent} ev
@@ -166,18 +188,20 @@ class masu extends masubase {
 			});
 		}
 	}
+	setflag() {
+		this.hasflag = true;
+		this.#elem.classList.add("flag");
+	}
+	removeflag() {
+		this.hasflag = false;
+		this.#elem.classList.remove("flag");
+	}
 }
 
 class hasi extends masubase {
 	constructor() {
 		super();
 		this;
-	}
-	bubbleopen() {
-		return;
-	}
-	addnum() {
-		return;
 	}
 }
 
@@ -211,3 +235,45 @@ document.addEventListener("DOMContentLoaded", () => {
 		childList: true,
 	});
 });
+
+(() => {
+	//メニュー関連の処理
+	const popup = document.getElementById("popup");
+	/**
+	 * @param {MouseEvent} ev
+	 * @this {HTMLDivElement}
+	 */
+	const open = (ev) => {
+		ev.stopPropagation();
+		ev.preventDefault();
+		if (safe === 0 || out) return;
+		const x = Number.parseInt(popup.dataset.x);
+		const y = Number.parseInt(popup.dataset.y);
+		console.log(`${x}_${y}`);
+		masuwraps[y][x].bubbleopen();
+		popup.style.display = "none";
+	};
+	/**
+	 * @param {MouseEvent} ev
+	 * @this {HTMLDivElement}
+	 */
+	const flag = (ev) => {
+		ev.preventDefault();
+		ev.stopPropagation();
+		if (safe === 0 || out) return;
+		const thismasu = masuwraps[popup.dataset.y][popup.dataset.x];
+		if (thismasu.hasflag) {
+			thismasu.removeflag();
+		} else {
+			thismasu.setflag();
+		}
+		popup.style.display = "none";
+	};
+	document.getElementById("popup-open").addEventListener("touchstart", open);
+	document.getElementById("popup-flag").addEventListener("touchstart", flag);
+	document.addEventListener("touchstart", () => {
+		popup.style.display = "none";
+	});
+})();
+
+//スマホなら処理を変更
