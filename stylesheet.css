@@ -1,5 +1,7 @@
 #main {
     width: fit-content;
+    -webkit-user-select: none; 
+    user-select: none;
 }
 
 .wrap {
